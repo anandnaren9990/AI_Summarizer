@@ -9,6 +9,7 @@ print("Type exit to quit.\n")
 
 while True:
     input_text = input("Provide your text to summarize: ")
+    print("\nSummarizing...\n")
     if input_text.lower() == "exit":
         break
     try:

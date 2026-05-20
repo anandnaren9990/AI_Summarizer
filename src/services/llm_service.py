@@ -1,10 +1,12 @@
 import time
-
+from app_log import logger
 import requests as rq
 import json
 import resources.llm_properties as lp
 
 def ai_summarizer(messages, model):
+    logger.info("Sending request to LLM...")
+    start = time.time()
     try:
         payload = {
             "model" : model,
@@ -23,15 +25,23 @@ def ai_summarizer(messages, model):
             if chunk.get("done") is True:
                 print("")
                 break
+        duration = time.time() - start
+        logger.info(f"LLM response time: {duration:.2f}s")
     except rq.exceptions.ConnectionError as e:
+        logger.error(f"Model is not responsive: {e}")
         print(f"Model is not responsive: {e}")
     except rq.exceptions.ConnectTimeout as e:
+        logger.error(f"Model took long time to respond: {e}")
         print(f"Model took long time to respond: {e}")
     except rq.exceptions.HTTPError as e:
+        logger.error(f"Error establishing connection: {e}")
         print(f"Error establishing connection: {e}")
     except rq.exceptions.JSONDecodeError as e: 
+        logger.error(f"The response was not valid JSON: {e}")
         print(f"The response was not valid JSON: {e}")
     except rq.exceptions.RequestException as e:
+        logger.error(f"Some other request error happened: {e}")
         print(f"Some other request error happened: {e}")
     except Exception as e:
-        print(f"Some other exception occured: {e}")
+        logger.error(f"Exception occured: {e}")
+        print(f"Exception occured: {e}")
