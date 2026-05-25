@@ -1,2 +1,12 @@
-logs
-.venv
+logs/
+.venv/
+__pycache__
+.DS_Store
+.git
+.gitignore
+.dockerignore
+Dockerfile
+src/__pycache__
+src/resources/__pycache__
+src/services/__pycache__
+src/.DS_Store
